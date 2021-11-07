@@ -19,6 +19,9 @@ jobs:
   Explore-Git-Version:
     runs-on: ubuntu-latest
     steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+
       - name: Install GitVersion
         uses: gittools/actions/gitversion/setup@v0.9.10
         with:
