@@ -16,6 +16,12 @@ jobs:
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
 
+  Explore-Git-Version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+
       - name: Install GitVersion
         uses: gittools/actions/gitversion/setup@v0.9.10
         with:
@@ -59,3 +65,19 @@ jobs:
           echo "CommitsSinceVersionSourcePadded: ${{ steps.gitversion.outputs.commitsSinceVersionSourcePadded }}"
           echo "UncommittedChanges: ${{ steps.gitversion.outputs.uncommittedChanges }}"
           echo "CommitDate: ${{ steps.gitversion.outputs.commitDate }}"
+
+      - name: Package Source
+        run: |
+          tar -czvf source.${{ steps.gitversion.outputs.semVer }}.tar.gz ${{ github.workspace }}
+
+      - name: Upload
+        uses: actions/upload-artifact@v2
+        with:
+          name: source.${{ steps.gitversion.outputs.semVer }}.tar.gz
+          path: ${{ github.workspace }}/source.${{ steps.gitversion.outputs.semVer }}.tar.gz
+
+      # - name: Upload
+      #   uses: softprops/action-gh-release@v1
+      #   if: startsWith(github.ref, 'refs/tags/')
+      #   with:
+      #     files: build.tar.gz
