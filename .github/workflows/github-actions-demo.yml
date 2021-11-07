@@ -14,7 +14,11 @@ jobs:
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
+      - run: echo "🍏 This job's status is ${{ job.status }}."
 
+  Explore-Git-Version:
+    runs-on: ubuntu-latest
+    steps:
       - name: Install GitVersion
         uses: gittools/actions/gitversion/setup@v0.9.10
         with:
@@ -74,5 +78,3 @@ jobs:
       #   if: startsWith(github.ref, 'refs/tags/')
       #   with:
       #     files: build.tar.gz
-
-      - run: echo "🍏 This job's status is ${{ job.status }}."
