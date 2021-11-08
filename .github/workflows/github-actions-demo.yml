@@ -70,7 +70,7 @@ jobs:
 
       - name: Package Source
         run: |
-          tar -czvf source.${{ steps.gitversion.outputs.semVer }}.tar.gz ${{ github.workspace }}
+          tar -czf source.${{ steps.gitversion.outputs.semVer }}.tar.gz ${{ github.workspace }}/*
 
       - name: Upload
         uses: actions/upload-artifact@v2
