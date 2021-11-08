@@ -13,6 +13,7 @@ jobs:
       - run: echo "🖥️ The workflow is now ready to test your code on the runner."
       - name: List files in the repository
         run: |
+          pwd
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
 
@@ -70,7 +71,7 @@ jobs:
 
       - name: Package Source
         run: |
-          tar -czf source.${{ steps.gitversion.outputs.semVer }}.tar.gz ${{ github.workspace }}/*
+          tar -czvf source.${{ steps.gitversion.outputs.semVer }}.tar.gz ./*
 
       - name: Upload
         uses: actions/upload-artifact@v2
