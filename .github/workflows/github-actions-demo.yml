@@ -13,6 +13,7 @@ jobs:
       - run: echo "🖥️ The workflow is now ready to test your code on the runner."
       - name: List files in the repository
         run: |
+          pwd
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
 
@@ -21,6 +22,8 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
       - name: Install GitVersion
         uses: gittools/actions/gitversion/setup@v0.9.10
@@ -68,13 +71,13 @@ jobs:
 
       - name: Package Source
         run: |
-          tar -czvf source.${{ steps.gitversion.outputs.semVer }}.tar.gz ${{ github.workspace }}
+          tar -czvf source.${{ steps.gitversion.outputs.fullSemVer }}.tar.gz ./*
 
       - name: Upload
         uses: actions/upload-artifact@v2
         with:
-          name: source.${{ steps.gitversion.outputs.semVer }}.tar.gz
-          path: ${{ github.workspace }}/source.${{ steps.gitversion.outputs.semVer }}.tar.gz
+          name: source.${{ steps.gitversion.outputs.fullSemVer }}.tar.gz
+          path: ${{ github.workspace }}/source.${{ steps.gitversion.outputs.fullSemVer }}.tar.gz
 
       # - name: Upload
       #   uses: softprops/action-gh-release@v1
