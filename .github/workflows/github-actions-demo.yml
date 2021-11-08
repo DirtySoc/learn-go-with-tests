@@ -71,13 +71,13 @@ jobs:
 
       - name: Package Source
         run: |
-          tar -czvf source.${{ steps.gitversion.outputs.semVer }}.tar.gz ./*
+          tar -czvf source.${{ steps.gitversion.outputs.fullSemVer }}.tar.gz ./*
 
       - name: Upload
         uses: actions/upload-artifact@v2
         with:
-          name: source.${{ steps.gitversion.outputs.semVer }}.tar.gz
-          path: ${{ github.workspace }}/source.${{ steps.gitversion.outputs.semVer }}.tar.gz
+          name: source.${{ steps.gitversion.outputs.fullSemVer }}.tar.gz
+          path: ${{ github.workspace }}/source.${{ steps.gitversion.outputs.fullSemVer }}.tar.gz
 
       # - name: Upload
       #   uses: softprops/action-gh-release@v1
